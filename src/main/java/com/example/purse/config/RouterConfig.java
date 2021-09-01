@@ -9,6 +9,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
+import com.example.purse.handler.BootCoinHandler;
 import com.example.purse.handler.PurseHandler;
 
 @Configuration
@@ -20,7 +21,16 @@ public class RouterConfig {
 				.andRoute(GET("/debit/{id}"), handler::findById)
 				.andRoute(POST("/purse"), handler::save)
 				.andRoute(POST("/purse/update"), handler::update);
+				
 				//.andRoute(POST("/purse/update"), handler::update);
+	}
+
+	@Bean
+	public RouterFunction<ServerResponse> rutasBootCoin(BootCoinHandler handler) {
+		return route(GET("/bootcoin"), handler::findAll)
+				.andRoute(GET("/bootcoin/{id}"), handler::findById)
+				.andRoute(POST("/bootcoin"), handler::save)
+				.andRoute(POST("/bootcoin/payment"), handler::createBuyBootCoin);
 	}
 	
 }
